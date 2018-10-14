@@ -1,0 +1,6 @@
+# directories
+obj
+src/obj
+src/bin
+packages
+.vs
