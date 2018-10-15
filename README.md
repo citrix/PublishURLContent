@@ -18,3 +18,16 @@ built to be used on a XenApp/XenDesktop server or as a published application.
     - If an image doesn't already exist you can use the"Add new image" button to add a new image to the list.
 
 Once you have filled in all the fields, in order to publish your content URL to you will need to hit the "Publish URL content" button.
+
+## Code
+
+### Prerequisites
+
+[Visual Studio](http://www.visualstudio.com) Community edition should be just fine for this project
+
+[Windows](https://www.microsoft.com/en-us/windows/get-windows-10)
+
+[Citrix XenApp/XenDesktop](https://www.citrix.com/community/citrix-developer/)
+
+### Cloning the repo
+    git clone https://github.com/citrix/PublishURLContent.git
