@@ -1,6 +1,6 @@
 # Citrix Content Publishing Utility
 
-The purpose of this utility is to help Citrix administrators publish "content" or URLs into your Citrix XenApp/XenDesktop environments using a GUI based tool. While the ability to publis content is available already, it currently only exists from the Powershell cmdlets. This tool is currently
+The purpose of this utility is to help Citrix administrators publish "content" or URLs into your Citrix XenApp/XenDesktop environments using a GUI based tool. While the ability to publish content is available already, it currently only exists from the Powershell cmdlets. This tool is currently
 built to be used on a XenApp/XenDesktop server or as a published application.
 
 ![](images/mainui.png)
