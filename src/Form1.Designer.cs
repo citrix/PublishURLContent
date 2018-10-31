@@ -49,79 +49,84 @@
             this.cbDeliveryGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDeliveryGroup.FormattingEnabled = true;
             this.cbDeliveryGroup.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cbDeliveryGroup.Location = new System.Drawing.Point(43, 48);
-            this.cbDeliveryGroup.Margin = new System.Windows.Forms.Padding(4);
+            this.cbDeliveryGroup.Location = new System.Drawing.Point(64, 75);
+            this.cbDeliveryGroup.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.cbDeliveryGroup.Name = "cbDeliveryGroup";
-            this.cbDeliveryGroup.Size = new System.Drawing.Size(442, 24);
+            this.cbDeliveryGroup.Size = new System.Drawing.Size(661, 33);
             this.cbDeliveryGroup.TabIndex = 1;
             // 
             // tbDisplayName
             // 
-            this.tbDisplayName.Location = new System.Drawing.Point(43, 105);
-            this.tbDisplayName.Margin = new System.Windows.Forms.Padding(4);
+            this.tbDisplayName.Location = new System.Drawing.Point(64, 164);
+            this.tbDisplayName.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tbDisplayName.Name = "tbDisplayName";
-            this.tbDisplayName.Size = new System.Drawing.Size(442, 22);
+            this.tbDisplayName.Size = new System.Drawing.Size(661, 31);
             this.tbDisplayName.TabIndex = 2;
             // 
             // tbDescription
             // 
-            this.tbDescription.Location = new System.Drawing.Point(43, 166);
-            this.tbDescription.Margin = new System.Windows.Forms.Padding(4);
+            this.tbDescription.Location = new System.Drawing.Point(64, 259);
+            this.tbDescription.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tbDescription.Name = "tbDescription";
-            this.tbDescription.Size = new System.Drawing.Size(442, 22);
+            this.tbDescription.Size = new System.Drawing.Size(661, 31);
             this.tbDescription.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(43, 24);
+            this.label1.Location = new System.Drawing.Point(64, 38);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(177, 17);
+            this.label1.Size = new System.Drawing.Size(267, 25);
             this.label1.TabIndex = 6;
             this.label1.Text = "Delivery Group for Content";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(43, 84);
+            this.label2.Location = new System.Drawing.Point(64, 131);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 17);
+            this.label2.Size = new System.Drawing.Size(145, 25);
             this.label2.TabIndex = 7;
             this.label2.Text = "Display Name";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(43, 145);
+            this.label3.Location = new System.Drawing.Point(64, 227);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(79, 17);
+            this.label3.Size = new System.Drawing.Size(120, 25);
             this.label3.TabIndex = 8;
             this.label3.Text = "Description";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(43, 205);
+            this.label4.Location = new System.Drawing.Point(64, 320);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 17);
+            this.label4.Size = new System.Drawing.Size(135, 25);
             this.label4.TabIndex = 10;
             this.label4.Text = "Content URL";
             // 
             // tbContentURL
             // 
-            this.tbContentURL.Location = new System.Drawing.Point(43, 226);
-            this.tbContentURL.Margin = new System.Windows.Forms.Padding(4);
+            this.tbContentURL.Location = new System.Drawing.Point(64, 353);
+            this.tbContentURL.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tbContentURL.Name = "tbContentURL";
-            this.tbContentURL.Size = new System.Drawing.Size(442, 22);
+            this.tbContentURL.Size = new System.Drawing.Size(661, 31);
             this.tbContentURL.TabIndex = 9;
             // 
             // listView1
             // 
             this.listView1.LargeImageList = this.imageList1;
-            this.listView1.Location = new System.Drawing.Point(46, 297);
+            this.listView1.Location = new System.Drawing.Point(69, 464);
+            this.listView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(439, 162);
+            this.listView1.Size = new System.Drawing.Size(656, 251);
             this.listView1.TabIndex = 11;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
@@ -134,17 +139,19 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(49, 277);
+            this.label5.Location = new System.Drawing.Point(74, 433);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(114, 17);
+            this.label5.Size = new System.Drawing.Size(175, 25);
             this.label5.TabIndex = 12;
             this.label5.Text = "Application Icons";
             // 
             // btnAddImage
             // 
-            this.btnAddImage.Location = new System.Drawing.Point(47, 465);
+            this.btnAddImage.Location = new System.Drawing.Point(70, 727);
+            this.btnAddImage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddImage.Name = "btnAddImage";
-            this.btnAddImage.Size = new System.Drawing.Size(130, 32);
+            this.btnAddImage.Size = new System.Drawing.Size(195, 50);
             this.btnAddImage.TabIndex = 13;
             this.btnAddImage.Text = "Add new image";
             this.btnAddImage.UseVisualStyleBackColor = true;
@@ -152,9 +159,10 @@
             // 
             // btnPublish
             // 
-            this.btnPublish.Location = new System.Drawing.Point(47, 514);
+            this.btnPublish.Location = new System.Drawing.Point(70, 803);
+            this.btnPublish.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnPublish.Name = "btnPublish";
-            this.btnPublish.Size = new System.Drawing.Size(438, 34);
+            this.btnPublish.Size = new System.Drawing.Size(657, 53);
             this.btnPublish.TabIndex = 14;
             this.btnPublish.Text = "Publish URL Content";
             this.btnPublish.UseVisualStyleBackColor = true;
@@ -162,9 +170,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 560);
+            this.ClientSize = new System.Drawing.Size(1002, 875);
             this.Controls.Add(this.btnPublish);
             this.Controls.Add(this.btnAddImage);
             this.Controls.Add(this.label5);
@@ -177,7 +185,7 @@
             this.Controls.Add(this.tbDescription);
             this.Controls.Add(this.tbDisplayName);
             this.Controls.Add(this.cbDeliveryGroup);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "Publishing URL Content Utility";
             this.ResumeLayout(false);
