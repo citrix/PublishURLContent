@@ -54,10 +54,10 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.ilImages = new System.Windows.Forms.ImageList(this.components);
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.tsbAdd = new System.Windows.Forms.ToolStripButton();
+            this.tsbUploadImage = new System.Windows.Forms.ToolStripButton();
+            this.tsbPublish = new System.Windows.Forms.ToolStripButton();
+            this.tsbListContent = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -202,9 +202,9 @@
             // 
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(0, 0);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton3,
-            this.toolStripButton4,
-            this.toolStripButton5});
+            this.tsbAdd,
+            this.tsbUploadImage,
+            this.tsbPublish});
             this.toolStrip1.Location = new System.Drawing.Point(3, 3);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1056, 71);
@@ -297,7 +297,7 @@
             // 
             this.toolStrip2.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
+            this.tsbListContent,
             this.toolStripButton2});
             this.toolStrip2.Location = new System.Drawing.Point(3, 3);
             this.toolStrip2.Name = "toolStrip2";
@@ -325,45 +325,49 @@
             this.miniToolStrip.Size = new System.Drawing.Size(1056, 103);
             this.miniToolStrip.TabIndex = 0;
             // 
-            // toolStripButton3
+            // tsbAdd
             // 
-            this.toolStripButton3.Image = global::PublishContent.Properties.Resources.add32;
-            this.toolStripButton3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(62, 68);
-            this.toolStripButton3.Text = "Add";
-            this.toolStripButton3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbAdd.Image = global::PublishContent.Properties.Resources.add32;
+            this.tsbAdd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAdd.Name = "tsbAdd";
+            this.tsbAdd.Size = new System.Drawing.Size(62, 68);
+            this.tsbAdd.Text = "Add";
+            this.tsbAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbAdd.Click += new System.EventHandler(this.tsbAdd_Click);
             // 
-            // toolStripButton4
+            // tsbUploadImage
             // 
-            this.toolStripButton4.Image = global::PublishContent.Properties.Resources.image32;
-            this.toolStripButton4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(168, 68);
-            this.toolStripButton4.Text = "Upload Image";
-            this.toolStripButton4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbUploadImage.Image = global::PublishContent.Properties.Resources.image32;
+            this.tsbUploadImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbUploadImage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbUploadImage.Name = "tsbUploadImage";
+            this.tsbUploadImage.Size = new System.Drawing.Size(168, 68);
+            this.tsbUploadImage.Text = "Upload Image";
+            this.tsbUploadImage.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbUploadImage.Click += new System.EventHandler(this.tsbUploadImage_Click);
             // 
-            // toolStripButton5
+            // tsbPublish
             // 
-            this.toolStripButton5.Image = global::PublishContent.Properties.Resources.publish32;
-            this.toolStripButton5.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(96, 68);
-            this.toolStripButton5.Text = "Publish";
-            this.toolStripButton5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbPublish.Image = global::PublishContent.Properties.Resources.publish32;
+            this.tsbPublish.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbPublish.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPublish.Name = "tsbPublish";
+            this.tsbPublish.Size = new System.Drawing.Size(96, 68);
+            this.tsbPublish.Text = "Publish";
+            this.tsbPublish.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbPublish.Click += new System.EventHandler(this.tsbPublish_Click);
             // 
-            // toolStripButton1
+            // tsbListContent
             // 
-            this.toolStripButton1.Image = global::PublishContent.Properties.Resources.list32;
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(147, 68);
-            this.toolStripButton1.Text = "List Content";
-            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbListContent.Image = global::PublishContent.Properties.Resources.list32;
+            this.tsbListContent.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbListContent.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbListContent.Name = "tsbListContent";
+            this.tsbListContent.Size = new System.Drawing.Size(147, 68);
+            this.tsbListContent.Text = "List Content";
+            this.tsbListContent.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbListContent.Click += new System.EventHandler(this.tsbListContent_Click);
             // 
             // toolStripButton2
             // 
@@ -402,7 +406,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStrip toolStrip2;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton tsbListContent;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label7;
@@ -425,8 +429,8 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStrip miniToolStrip;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton tsbAdd;
+        private System.Windows.Forms.ToolStripButton tsbUploadImage;
+        private System.Windows.Forms.ToolStripButton tsbPublish;
     }
 }
