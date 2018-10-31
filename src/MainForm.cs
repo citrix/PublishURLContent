@@ -214,5 +214,10 @@ namespace PublishContent
             disableNewContentControls();
 
         }
+
+        private void tsbListContent_Click(object sender, EventArgs e)
+        {
+            //list of existing published content
+        }
     }
 }
