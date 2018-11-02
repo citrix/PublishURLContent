@@ -12,6 +12,7 @@ namespace PublishContent.Classes
         public string Description { get; set; }
         public string PublishedName { get; set; }
         public Guid UUID { get; set; }
+        public int Uid { get; set; }
 
         public override string ToString()
         {

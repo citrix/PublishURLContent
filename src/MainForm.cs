@@ -20,6 +20,9 @@ namespace PublishContent
         RunspaceConfiguration rsc = null;
         Runspace rs = null;
         PowerShell ps = null;
+        List<Tuple<int, string>> appImages = new List<Tuple<int, string>>();
+        List<DeliveryGroup> deliveryGroups = new List<DeliveryGroup>();
+
 
         public MainForm()
         {
@@ -27,15 +30,23 @@ namespace PublishContent
 
             //setup the environment for using the 
             //citrix powershell cmdlets
-            //setupPowershellEnvironment();
-            //loadCitrixCmdlets();
+            setupPowershellEnvironment();
+            loadCitrixCmdlets();
+
+            loadDeliveryGroups();
 
 
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            cbDeliveryGroup.DataSource = deliveryGroups;
+            cbDeliveryGroup.DisplayMember = "Name";
+            cbDeliveryGroup.ValueMember = "Uid";
 
+            comboBox1.DataSource = deliveryGroups;
+            comboBox1.DisplayMember = "Name";
+            comboBox1.ValueMember = "Uid";
         }
 
         #region Custom methods for loading citrix powershell cmdlets
@@ -79,10 +90,14 @@ namespace PublishContent
         #region custom helper methods
         private void enableNewContentControls()
         {
+
+            loadBrokerIcons();
             cbDeliveryGroup.Enabled = true;
             tbContentURL.Enabled = true;
             tbDescription.Enabled = true;
             tbDisplayName.Enabled = true;
+            lvBrokerIcons.Enabled = true;
+
         }
         private void disableNewContentControls()
         {
@@ -90,7 +105,38 @@ namespace PublishContent
             tbContentURL.Enabled = false;
             tbDescription.Enabled = false;
             tbDisplayName.Enabled = false;
+            lvBrokerIcons.Enabled = false;
         }
+        private void loadBrokerIcons()
+        {
+            //clear all images out of the imagelist control
+            ilImages.Images.Clear();
+            lvBrokerIcons.Items.Clear();
+
+            //clear all commands in the powershell object
+            ps.Commands.Clear();
+            ps.AddCommand("Get-BrokerIcon");
+            //call the cmdlet
+            var icons = ps.Invoke();
+
+            //loop through each icon returned
+            foreach (var icon in icons)
+            {
+                //get the b64 encoded icon
+                var iconB64Data = icon.Properties["EncodedIconData"].Value;
+                //get the UID value
+                var uidOfIcon = icon.Properties["uid"].Value;
+
+                //conver the base 64 icon into a actual icon
+                var appIcon = convertB64ToIcon(iconB64Data.ToString());
+                //add the icon into the imagelist
+                ilImages.Images.Add(appIcon);
+
+                //add icon to list view with the UID as the text
+                lvBrokerIcons.Items.Add(uidOfIcon.ToString(), ilImages.Images.Count - 1);
+            }
+        }
+
         private Icon convertPngToIcon(string Filename)
         {
             //create new guid for icon filename
@@ -138,7 +184,7 @@ namespace PublishContent
         }
         private void loadDeliveryGroups()
         {
-            //get the delivery groups
+            //cb.Items.Clear();
 
             //clear all the commands out of the powershell object
             ps.Commands.Clear();
@@ -156,9 +202,11 @@ namespace PublishContent
                 dGroup.PublishedName = desktopGroup.Properties["PublishedName"].Value.ToString();
                 dGroup.Description = desktopGroup.Properties["Description"].Value.ToString();
                 dGroup.UUID = Guid.Parse(desktopGroup.Properties["UUID"].Value.ToString());
+                dGroup.Uid = Int32.Parse(desktopGroup.Properties["uid"].Value.ToString());
 
+                deliveryGroups.Add(dGroup);
                 //add the group to the combobox
-                cbDeliveryGroup.Items.Add(dGroup);
+                //cb.Items.Add(dGroup);
             }
         }
 
@@ -184,7 +232,7 @@ namespace PublishContent
                 ilImages.Images.Add(uidOfIcon.ToString(), icon);
 
                 //add icon to list view
-                listView1.Items.Add("", ilImages.Images.Count - 1);
+                lvBrokerIcons.Items.Add("", ilImages.Images.Count - 1);
             }
 
         }
@@ -199,14 +247,24 @@ namespace PublishContent
             ps.AddParameter("CommandLineExecutable", tbContentURL.Text);
             ps.AddParameter("Description", tbDescription.Text);
             ps.AddParameter("DesktopGroup", ((DeliveryGroup)(cbDeliveryGroup.SelectedItem)).Name);
-            var newApp = ps.Invoke();
+            try
+            {
+                var newApp = ps.Invoke();
+            }
+            catch ( System.Exception publishError )
+            {
+                MessageBox.Show(publishError.Message, "Publish Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-            if (listView1.SelectedItems != null)
+            if (lvBrokerIcons.SelectedItems != null)
             {
                 ps.Commands.Clear();
                 ps.AddCommand("Set-BrokerApplication");
                 ps.AddParameter("Name", tbDisplayName.Text);
-                ps.AddParameter("IconUid", listView1.SelectedItems[0].Text);
+                if (lvBrokerIcons.SelectedItems.Count > 0)
+                {
+                    ps.AddParameter("IconUid", lvBrokerIcons.SelectedItems[0].Text);
+                }
 
                 ps.Invoke();
             }
@@ -217,7 +275,85 @@ namespace PublishContent
 
         private void tsbListContent_Click(object sender, EventArgs e)
         {
+            loadDeliveryGroups();
+            lbExistingContent.Items.Clear();
             //list of existing published content
+            ps.Commands.Clear();
+
+            ps.AddCommand("Get-BrokerIcon");
+
+            var icons = ps.Invoke();
+            foreach (var icon in icons)
+            {
+                appImages.Add(new Tuple<int, string>(
+                    Convert.ToInt32(icon.Properties["Uid"].Value),
+                    icon.Properties["EncodedIconData"].Value.ToString()))
+                ;
+            }
+
+            ps.Commands.Clear();
+
+            ps.AddCommand("Get-BrokerApplication");
+            ps.AddParameter("ApplicationType", "PublishedContent");
+
+            var existingApps = ps.Invoke();
+
+            foreach (var app in existingApps)
+            {
+                PublishedContent listApp = new PublishedContent()
+                {
+                    name = app.Properties["Name"].Value.ToString(),
+                    browsername = app.Properties["BrowserName"].Value.ToString(),
+                    commandlineexec = app.Properties["CommandLineExecutable"].Value.ToString(),
+                    commandlineargs = (app.Properties["CommandLineArguments"].Value == null) ? "" : app.Properties["CommandLineArguments"].Value.ToString(),
+                    description = (app.Properties["Description"].Value == null) ? "" : app.Properties["Description"].Value.ToString(),
+                    associateddesktopgroupuids = (app.Properties["AssociatedDesktopGroupUids"].Value == null) ? "" : app.Properties["AssociatedDesktopGroupUids"].Value.ToString(),
+                    iconuid = (app.Properties["IconUid"].Value == null) ? 0 : Convert.ToInt32(app.Properties["IconUid"].Value)
+                };
+
+                var iconB64 = appImages.Where(a => a.Item1 == listApp.iconuid)
+                    .FirstOrDefault().Item2;
+
+                var icon = convertB64ToIcon(iconB64);
+                listApp.icon = icon.ToBitmap();
+
+                lbExistingContent.Items.Add(listApp);
+                Console.WriteLine("");
+            }
+        }
+
+        private void lbExistingContent_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void lbExistingContent_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var publishedContent = (PublishedContent)lbExistingContent.SelectedItem;
+            tbExistingContentURL.Text = publishedContent.commandlineexec;
+            tbExistingDesc.Text = publishedContent.description;
+            tbExistingDisplayName.Text = publishedContent.name;
+            comboBox1.SelectedValue = publishedContent.associateddesktopgroupuids;
+            pictureBox1.Image = publishedContent.icon;
+        }
+
+        private void btnAddNewImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog iconDlg = new OpenFileDialog();
+            //iconDlg.Filter = ""
+            if (iconDlg.ShowDialog() == DialogResult.OK)
+            {
+                var icon = convertPngToIcon(iconDlg.FileName);
+
+                var b64Icon = convertIcontoB64(icon);
+
+                var uidOfIcon = addIconToBroker(b64Icon);
+
+                ilImages.Images.Add(uidOfIcon.ToString(), icon);
+
+                //add icon to list view
+                lvBrokerIcons.Items.Add("", ilImages.Images.Count - 1);
+            }
         }
     }
 }
