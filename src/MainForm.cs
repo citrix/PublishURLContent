@@ -35,6 +35,10 @@ namespace PublishContent
 
             loadDeliveryGroups();
 
+            loadBrokerIcons();
+            //show existing broker icons
+            loadListViewIcons(lvBrokerIcons);
+
 
         }
 
@@ -96,7 +100,7 @@ namespace PublishContent
             tbContentURL.Enabled = true;
             tbDescription.Enabled = true;
             tbDisplayName.Enabled = true;
-            lvBrokerIcons.Enabled = true;
+            lvIcons.Enabled = true;
 
         }
         private void disableNewContentControls()
@@ -105,13 +109,22 @@ namespace PublishContent
             tbContentURL.Enabled = false;
             tbDescription.Enabled = false;
             tbDisplayName.Enabled = false;
-            lvBrokerIcons.Enabled = false;
+            lvIcons.Enabled = false;
+        }
+
+        private void loadListViewIcons(ListView lv)
+        {
+            foreach (var imageKey in ilImages.Images.Keys)
+            {
+                //add icon to list view with the UID as the text
+                lv.Items.Add(imageKey, imageKey);
+            }
         }
         private void loadBrokerIcons()
         {
             //clear all images out of the imagelist control
             ilImages.Images.Clear();
-            lvBrokerIcons.Items.Clear();
+            lvIcons.Items.Clear();
 
             //clear all commands in the powershell object
             ps.Commands.Clear();
@@ -129,11 +142,11 @@ namespace PublishContent
 
                 //conver the base 64 icon into a actual icon
                 var appIcon = convertB64ToIcon(iconB64Data.ToString());
-                //add the icon into the imagelist
-                ilImages.Images.Add(appIcon);
+                //add the icon into the imagelist with the uuid as the key
+                ilImages.Images.Add(uidOfIcon.ToString(), appIcon);
 
-                //add icon to list view with the UID as the text
-                lvBrokerIcons.Items.Add(uidOfIcon.ToString(), ilImages.Images.Count - 1);
+                ////add icon to list view with the UID as the text
+                //lvIcons.Items.Add(uidOfIcon.ToString(), ilImages.Images.Count - 1);
             }
         }
 
@@ -202,7 +215,7 @@ namespace PublishContent
                 dGroup.PublishedName = desktopGroup.Properties["PublishedName"].Value.ToString();
                 dGroup.Description = desktopGroup.Properties["Description"].Value.ToString();
                 dGroup.UUID = Guid.Parse(desktopGroup.Properties["UUID"].Value.ToString());
-                dGroup.Uid = Int32.Parse(desktopGroup.Properties["uid"].Value.ToString());
+                dGroup.Uid = int.Parse(desktopGroup.Properties["uid"].Value.ToString());
 
                 deliveryGroups.Add(dGroup);
                 //add the group to the combobox
@@ -215,6 +228,8 @@ namespace PublishContent
         private void tsbAdd_Click(object sender, EventArgs e)
         {
             enableNewContentControls();
+
+            loadListViewIcons(lvIcons);
         }
 
         private void tsbUploadImage_Click(object sender, EventArgs e)
@@ -232,9 +247,8 @@ namespace PublishContent
                 ilImages.Images.Add(uidOfIcon.ToString(), icon);
 
                 //add icon to list view
-                lvBrokerIcons.Items.Add("", ilImages.Images.Count - 1);
+                lvBrokerIcons.Items.Add(uidOfIcon.ToString(), ilImages.Images.Count - 1);
             }
-
         }
 
         private void tsbPublish_Click(object sender, EventArgs e)
@@ -256,14 +270,14 @@ namespace PublishContent
                 MessageBox.Show(publishError.Message, "Publish Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            if (lvBrokerIcons.SelectedItems != null)
+            if (lvIcons.SelectedItems != null)
             {
                 ps.Commands.Clear();
                 ps.AddCommand("Set-BrokerApplication");
                 ps.AddParameter("Name", tbDisplayName.Text);
-                if (lvBrokerIcons.SelectedItems.Count > 0)
+                if (lvIcons.SelectedItems.Count > 0)
                 {
-                    ps.AddParameter("IconUid", lvBrokerIcons.SelectedItems[0].Text);
+                    ps.AddParameter("IconUid", lvIcons.SelectedItems[0].Text);
                 }
 
                 ps.Invoke();
@@ -300,6 +314,8 @@ namespace PublishContent
 
             foreach (var app in existingApps)
             {
+                var desktopGroups = (int[])app.Properties["AssociatedDesktopGroupUids"].Value;
+
                 PublishedContent listApp = new PublishedContent()
                 {
                     name = app.Properties["Name"].Value.ToString(),
@@ -307,7 +323,7 @@ namespace PublishContent
                     commandlineexec = app.Properties["CommandLineExecutable"].Value.ToString(),
                     commandlineargs = (app.Properties["CommandLineArguments"].Value == null) ? "" : app.Properties["CommandLineArguments"].Value.ToString(),
                     description = (app.Properties["Description"].Value == null) ? "" : app.Properties["Description"].Value.ToString(),
-                    associateddesktopgroupuids = (app.Properties["AssociatedDesktopGroupUids"].Value == null) ? "" : app.Properties["AssociatedDesktopGroupUids"].Value.ToString(),
+                    associateddesktopgroupuids = (desktopGroups == null) ? 0 : desktopGroups[0],
                     iconuid = (app.Properties["IconUid"].Value == null) ? 0 : Convert.ToInt32(app.Properties["IconUid"].Value)
                 };
 
@@ -318,7 +334,7 @@ namespace PublishContent
                 listApp.icon = icon.ToBitmap();
 
                 lbExistingContent.Items.Add(listApp);
-                Console.WriteLine("");
+
             }
         }
 
@@ -333,14 +349,37 @@ namespace PublishContent
             tbExistingContentURL.Text = publishedContent.commandlineexec;
             tbExistingDesc.Text = publishedContent.description;
             tbExistingDisplayName.Text = publishedContent.name;
-            comboBox1.SelectedValue = publishedContent.associateddesktopgroupuids;
-            pictureBox1.Image = publishedContent.icon;
-        }
 
+            var delGroup = deliveryGroups.Where(group => group.Uid == publishedContent.associateddesktopgroupuids)
+                .FirstOrDefault();
+
+            var selectedDesktopGroupIndex = comboBox1.Items.IndexOf(delGroup.Uid);
+
+            comboBox1.SelectedIndex = selectedDesktopGroupIndex;
+            if (cbAppIcon.Items.Count == 0)
+            {
+                foreach (var imageKey in ilImages.Images.Keys)
+                {
+                    cbAppIcon.Items.Add(imageKey);
+                }
+            }
+
+            var selectedIndex = cbAppIcon.Items.IndexOf(publishedContent.iconuid.ToString());
+            cbAppIcon.SelectedIndex = selectedIndex;
+        }
+        private void cbAppIcon_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var iconB64 = appImages.Where(a => a.Item1 == Convert.ToInt32(cbAppIcon.SelectedItem))
+                .FirstOrDefault().Item2;
+
+            var icon = convertB64ToIcon(iconB64);
+
+            pbAppIcon.Image = icon.ToBitmap();
+        }
         private void btnAddNewImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog iconDlg = new OpenFileDialog();
-            //iconDlg.Filter = ""
+
             if (iconDlg.ShowDialog() == DialogResult.OK)
             {
                 var icon = convertPngToIcon(iconDlg.FileName);
@@ -352,8 +391,10 @@ namespace PublishContent
                 ilImages.Images.Add(uidOfIcon.ToString(), icon);
 
                 //add icon to list view
-                lvBrokerIcons.Items.Add("", ilImages.Images.Count - 1);
+                lvIcons.Items.Add(uidOfIcon.ToString(), ilImages.Images.Count - 1);
             }
         }
+
+
     }
 }
