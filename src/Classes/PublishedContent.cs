@@ -16,7 +16,7 @@ namespace PublishContent.Classes
         public string browsername { get; set; }
         public int iconuid { get; set; }
         public Bitmap icon { get; set; }
-        public string associateddesktopgroupuids { get; set; }
+        public int associateddesktopgroupuids { get; set; }
         public string description { get; set; }
         public override string ToString()
         {
