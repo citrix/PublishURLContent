@@ -43,8 +43,6 @@
             this.tbDisplayName = new System.Windows.Forms.TextBox();
             this.cbDeliveryGroup = new System.Windows.Forms.ComboBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsbAdd = new System.Windows.Forms.ToolStripButton();
-            this.tsbPublish = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -52,7 +50,6 @@
             this.tbExistingCLA = new System.Windows.Forms.TextBox();
             this.lbExistingUUID = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.pbAppIcon = new System.Windows.Forms.PictureBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.tbExistingContentURL = new System.Windows.Forms.TextBox();
@@ -62,22 +59,26 @@
             this.tbExistingDisplayName = new System.Windows.Forms.TextBox();
             this.lbExistingContent = new System.Windows.Forms.ListBox();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.tsbListContent = new System.Windows.Forms.ToolStripButton();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
-            this.tsbUploadImage = new System.Windows.Forms.ToolStripButton();
             this.label13 = new System.Windows.Forms.Label();
             this.lvBrokerIcons = new System.Windows.Forms.ListView();
             this.cbAppIcon = new System.Windows.Forms.ComboBox();
+            this.tsbAdd = new System.Windows.Forms.ToolStripButton();
+            this.tsbPublish = new System.Windows.Forms.ToolStripButton();
+            this.pbAppIcon = new System.Windows.Forms.PictureBox();
+            this.tsbListContent = new System.Windows.Forms.ToolStripButton();
+            this.tsbUpdateExisting = new System.Windows.Forms.ToolStripButton();
+            this.tsbUploadImage = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbAppIcon)).BeginInit();
             this.toolStrip2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.toolStrip3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbAppIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -231,28 +232,6 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // tsbAdd
-            // 
-            this.tsbAdd.Image = global::PublishContent.Properties.Resources.add32;
-            this.tsbAdd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsbAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAdd.Name = "tsbAdd";
-            this.tsbAdd.Size = new System.Drawing.Size(36, 51);
-            this.tsbAdd.Text = "Add";
-            this.tsbAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbAdd.Click += new System.EventHandler(this.tsbAdd_Click);
-            // 
-            // tsbPublish
-            // 
-            this.tsbPublish.Image = global::PublishContent.Properties.Resources.publish32;
-            this.tsbPublish.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsbPublish.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbPublish.Name = "tsbPublish";
-            this.tsbPublish.Size = new System.Drawing.Size(50, 51);
-            this.tsbPublish.Text = "Publish";
-            this.tsbPublish.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbPublish.Click += new System.EventHandler(this.tsbPublish_Click);
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.cbAppIcon);
@@ -336,15 +315,6 @@
             this.label10.TabIndex = 30;
             this.label10.Text = "UUID";
             // 
-            // pbAppIcon
-            // 
-            this.pbAppIcon.Location = new System.Drawing.Point(322, 354);
-            this.pbAppIcon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.pbAppIcon.Name = "pbAppIcon";
-            this.pbAppIcon.Size = new System.Drawing.Size(74, 63);
-            this.pbAppIcon.TabIndex = 28;
-            this.pbAppIcon.TabStop = false;
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -422,23 +392,13 @@
             // 
             this.toolStrip2.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsbListContent});
+            this.tsbListContent,
+            this.tsbUpdateExisting});
             this.toolStrip2.Location = new System.Drawing.Point(2, 2);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(527, 54);
             this.toolStrip2.TabIndex = 0;
             this.toolStrip2.Text = "toolStrip2";
-            // 
-            // tsbListContent
-            // 
-            this.tsbListContent.Image = global::PublishContent.Properties.Resources.list32;
-            this.tsbListContent.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsbListContent.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbListContent.Name = "tsbListContent";
-            this.tsbListContent.Size = new System.Drawing.Size(75, 51);
-            this.tsbListContent.Text = "List Content";
-            this.tsbListContent.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbListContent.Click += new System.EventHandler(this.tsbListContent_Click);
             // 
             // miniToolStrip
             // 
@@ -477,18 +437,6 @@
             this.toolStrip3.TabIndex = 1;
             this.toolStrip3.Text = "toolStrip3";
             // 
-            // tsbUploadImage
-            // 
-            this.tsbUploadImage.Image = global::PublishContent.Properties.Resources.image32;
-            this.tsbUploadImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsbUploadImage.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbUploadImage.Name = "tsbUploadImage";
-            this.tsbUploadImage.Size = new System.Drawing.Size(85, 51);
-            this.tsbUploadImage.Text = "Upload Image";
-            this.tsbUploadImage.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.tsbUploadImage.ToolTipText = "Upload Image";
-            this.tsbUploadImage.Click += new System.EventHandler(this.tsbUploadImage_Click);
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -525,6 +473,71 @@
             this.cbAppIcon.ValueMember = "iconuid";
             this.cbAppIcon.SelectedIndexChanged += new System.EventHandler(this.cbAppIcon_SelectedIndexChanged);
             // 
+            // tsbAdd
+            // 
+            this.tsbAdd.Image = global::PublishContent.Properties.Resources.add32;
+            this.tsbAdd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAdd.Name = "tsbAdd";
+            this.tsbAdd.Size = new System.Drawing.Size(36, 51);
+            this.tsbAdd.Text = "Add";
+            this.tsbAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbAdd.Click += new System.EventHandler(this.tsbAdd_Click);
+            // 
+            // tsbPublish
+            // 
+            this.tsbPublish.Image = global::PublishContent.Properties.Resources.publish32;
+            this.tsbPublish.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbPublish.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPublish.Name = "tsbPublish";
+            this.tsbPublish.Size = new System.Drawing.Size(50, 51);
+            this.tsbPublish.Text = "Publish";
+            this.tsbPublish.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbPublish.Click += new System.EventHandler(this.tsbPublish_Click);
+            // 
+            // pbAppIcon
+            // 
+            this.pbAppIcon.Location = new System.Drawing.Point(322, 354);
+            this.pbAppIcon.Margin = new System.Windows.Forms.Padding(2);
+            this.pbAppIcon.Name = "pbAppIcon";
+            this.pbAppIcon.Size = new System.Drawing.Size(74, 63);
+            this.pbAppIcon.TabIndex = 28;
+            this.pbAppIcon.TabStop = false;
+            // 
+            // tsbListContent
+            // 
+            this.tsbListContent.Image = global::PublishContent.Properties.Resources.list32;
+            this.tsbListContent.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbListContent.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbListContent.Name = "tsbListContent";
+            this.tsbListContent.Size = new System.Drawing.Size(75, 51);
+            this.tsbListContent.Text = "List Content";
+            this.tsbListContent.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbListContent.Click += new System.EventHandler(this.tsbListContent_Click);
+            // 
+            // tsbUpdateExisting
+            // 
+            this.tsbUpdateExisting.Image = global::PublishContent.Properties.Resources.save32;
+            this.tsbUpdateExisting.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbUpdateExisting.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbUpdateExisting.Name = "tsbUpdateExisting";
+            this.tsbUpdateExisting.Size = new System.Drawing.Size(36, 51);
+            this.tsbUpdateExisting.Text = "Save";
+            this.tsbUpdateExisting.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbUpdateExisting.Click += new System.EventHandler(this.tsbUpdateExisting_Click);
+            // 
+            // tsbUploadImage
+            // 
+            this.tsbUploadImage.Image = global::PublishContent.Properties.Resources.image32;
+            this.tsbUploadImage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsbUploadImage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbUploadImage.Name = "tsbUploadImage";
+            this.tsbUploadImage.Size = new System.Drawing.Size(85, 51);
+            this.tsbUploadImage.Text = "Upload Image";
+            this.tsbUploadImage.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.tsbUploadImage.ToolTipText = "Upload Image";
+            this.tsbUploadImage.Click += new System.EventHandler(this.tsbUploadImage_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -543,13 +556,13 @@
             this.toolStrip1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbAppIcon)).EndInit();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbAppIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -597,5 +610,6 @@
         private System.Windows.Forms.ToolStrip toolStrip3;
         private System.Windows.Forms.ToolStripButton tsbUploadImage;
         private System.Windows.Forms.ComboBox cbAppIcon;
+        private System.Windows.Forms.ToolStripButton tsbUpdateExisting;
     }
 }

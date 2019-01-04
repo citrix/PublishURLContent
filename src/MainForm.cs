@@ -197,8 +197,6 @@ namespace PublishContent
         }
         private void loadDeliveryGroups()
         {
-            //cb.Items.Clear();
-
             //clear all the commands out of the powershell object
             ps.Commands.Clear();
             //add the cmdlet to the powershell obect
@@ -218,8 +216,6 @@ namespace PublishContent
                 dGroup.Uid = int.Parse(desktopGroup.Properties["uid"].Value.ToString());
 
                 deliveryGroups.Add(dGroup);
-                //add the group to the combobox
-                //cb.Items.Add(dGroup);
             }
         }
 
@@ -235,7 +231,7 @@ namespace PublishContent
         private void tsbUploadImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog iconDlg = new OpenFileDialog();
-            //iconDlg.Filter = ""
+
             if (iconDlg.ShowDialog() == DialogResult.OK)
             {
                 var icon = convertPngToIcon(iconDlg.FileName);
@@ -353,7 +349,7 @@ namespace PublishContent
             var delGroup = deliveryGroups.Where(group => group.Uid == publishedContent.associateddesktopgroupuids)
                 .FirstOrDefault();
 
-            var selectedDesktopGroupIndex = comboBox1.Items.IndexOf(delGroup.Uid);
+            var selectedDesktopGroupIndex = comboBox1.Items.IndexOf(delGroup);
 
             comboBox1.SelectedIndex = selectedDesktopGroupIndex;
             if (cbAppIcon.Items.Count == 0)
@@ -395,6 +391,30 @@ namespace PublishContent
             }
         }
 
+        private void tsbUpdateExisting_Click(object sender, EventArgs e)
+        {
+            if ( lbExistingContent.SelectedItems.Count == 1)
+            {
+                var displayName = tbExistingDisplayName.Text;
+                var description = tbExistingDesc.Text;
+                var contentUrl = tbExistingContentURL.Text;
+                var commandLineArgs = tbExistingCLA.Text;
+                var desktopGroup = ((DeliveryGroup)comboBox1.SelectedItem).Uid;
+                var appIcon = cbAppIcon.Text;
 
+                ps.Commands.Clear();
+                ps.Commands.AddCommand("Set-BrokerApplication");
+                ps.AddParameter("Name", displayName);
+                ps.AddParameter("CommandLineExecutable", contentUrl);
+                ps.AddParameter("CommandLineArguments", commandLineArgs);
+                ps.AddParameter("Description", description);
+                ps.AddParameter("IconUid", appIcon);
+
+                //cannot change the desktop group. In order to change the desktop group
+                //you need to remove the application and re-add
+                //ps.AddParameter("DesktopGroup", ((DeliveryGroup)(cbDeliveryGroup.SelectedItem)).Name);
+                ps.Invoke();
+            }
+        }
     }
 }
